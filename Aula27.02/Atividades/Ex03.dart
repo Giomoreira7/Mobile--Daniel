@@ -10,7 +10,6 @@ Criar métodos para ligar, desligar a máquina e um método para ajustar a veloc
 rotação da máquina. */
 
 
-
 class Maquinas {
   String nomeDaMaquina;
   int quantidadeDeEixos;
