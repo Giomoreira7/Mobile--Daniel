@@ -4,6 +4,7 @@ void main() {
   runApp(
     // Design para Android
     MaterialApp(
+      debugShowCheckedModeBanner: false,
     home: Home(),
   ));
 }
@@ -16,7 +17,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Aula 08"),
-        backgroundColor: Colors.purpleAccent,
+        backgroundColor: const Color.fromARGB(255, 155, 47, 237),
         actions: [
           IconButton(onPressed: (){
             print("Busca Acionada");
@@ -28,9 +29,19 @@ class Home extends StatelessWidget {
         
       ),
 
-      body: Center(
-        child: Text("Conteudo principal do aplicativo",style: TextStyle(fontSize: 20),),
+   body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+            Container(width: 200,height: 200,color: const Color.fromARGB(255, 213, 161, 253),
+            
+            child: Text("Aplicativo Mobile",textAlign: TextAlign.center,     
+                  style: TextStyle(fontSize: 20),),),
+           // Text("Conteudo principal do aplicativo",style: TextStyle(fontSize: 20),),
+          ],
+        )
       ),
+    
     );
   }
 }
