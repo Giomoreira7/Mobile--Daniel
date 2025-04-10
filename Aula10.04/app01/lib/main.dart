@@ -1,6 +1,7 @@
 import "package:app01/screens/tela01.dart";
 import 'package:app01/screens/tela02.dart';
 import 'package:app01/screens/tela03.dart';
+import 'package:app01/screens/tela04.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -53,9 +54,10 @@ class _NavScreenState extends State<NavScreen> {
         'Index 2: Business',style: optionStyle,
       ),*/
       RadioButton(),
-      Text(
+      /*Text(
         'Index 3: Chatbot',style: optionStyle,
-      ),
+      ),*/
+      ChatScreen()
 
     ];
 
@@ -115,3 +117,4 @@ class _NavScreenState extends State<NavScreen> {
     );
   }
 }
+
