@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/login.dart'; // Certifique-se de que login.dart está com nome minúsculo
+import 'screens/cadastro.dart';
 
 void main() {
   runApp(const MyApp());
