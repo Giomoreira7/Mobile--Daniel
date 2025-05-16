@@ -1,154 +1,230 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class DadosScreen extends StatelessWidget {
+const String baseUrl = 'http://10.0.2.2:8000'; 
+class SensorData {
+  final String title;
+  final String value;
+  final String status;
+  final Color statusColor;
+  final String imagePath;
+// Cria o construtor
+  SensorData(
+      {required this.title,
+      required this.value,
+      required this.status,
+      required this.statusColor,
+      required this.imagePath});
+}
+class DadosScreen extends StatefulWidget {
   const DadosScreen({super.key});
+
+  @override
+  State<DadosScreen> createState() => _DadosScreenState();
+}
+
+class _DadosScreenState extends State<DadosScreen> {
+
+ // Cria lista com os sensores
+  final List<SensorData> sensores = [
+    // primeiro sensor
+    SensorData(
+        title: 'Umidade do solo',
+        value: '80%',
+        status: 'Bom',
+        statusColor: const Color(0xFF025A40),
+        imagePath: 'images/umidade.png'),
+
+    SensorData(
+        title: 'Temperatura',
+        value: '25 ºC',
+        status: 'Bom',
+        statusColor:  const Color(0xFF025A40),
+        imagePath: 'images/temp.png'),
+    SensorData(
+        title: 'Luminosidade',
+        value: '80%',
+        status: 'Bom',
+        statusColor:  const Color(0xFF025A40),
+        imagePath: 'images/lumi.png'),
+
+    SensorData(
+        title: 'Niveis de ph',
+        value: '2',
+        status: 'Ruim',
+        statusColor: Colors.red,
+        imagePath: 'images/lumi.png'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF025A40),
       appBar: AppBar(
-        leading: const BackButton(color: Colors.white),
-        title: const Text(
-          'Coleta de Dados',
-          style: TextStyle(
-            color: Colors.white, // Cor do texto do título
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back,
+            color:  const Color(0xFF025A40),
           ),
+        ),
+        title: Text(
+          'Coleta de Dados',
+          style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFF025A40), // Cor do fundo do AppBar
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-        ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildDataCard(context, 'images/umidade.png', 'Umidade do Solo'),
-          _buildDataCard(context, 'images/temp.png', 'Temperatura'),
-          _buildDataCard(context, 'images/lumi.png', 'Luminosidade'),
-          _buildDataCard(context, 'images/ph.png', 'Níveis de pH'),
-        ],
-      ),
-      bottomNavigationBar: _buildBottomCardBar(),
-    );
+      // Widget novo Listview.builder
+      body: ListView.builder(
+          // itemCount é para verificar o tamanho da lista dos elementos
+          itemCount: sensores.length,
+          // context esta relacionado a tela e o index a quantidade de elementos
+          itemBuilder: (context, index) {
+            final sensor = sensores[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context)=>DetalheSensorScreen(sensor: sensor)));
+              },
+              child: SensorCard(sensor: sensor),
+            );
+            
+            
+            
+          }),
+      );
+    
   }
+}
 
-  Widget _buildDataCard(BuildContext context, String imagePath, String title) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF0F0F0),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
+// cria a classe sensor card
+
+class SensorCard extends StatelessWidget {
+  final SensorData sensor;
+  SensorCard({super.key, required this.sensor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.only(bottom: 16),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      elevation: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            margin: const EdgeInsets.all(12),
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            child: Image.asset(
+              sensor.imagePath,
+              height: 200,
+              fit: BoxFit.cover,
             ),
+          
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  sensor.title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      sensor.value,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: 100,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Navegação para a tela de gráficos
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const GraficoScreen(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        side: const BorderSide(color: Color(0xFF025A40)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
                       ),
-                      child: const Text(
-                        'Gráfico',
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Text(
+                        sensor.status,
                         style: TextStyle(
-                          color: Color(0xFF025A40),
-                          fontWeight: FontWeight.bold,
-                        ),
+                            color: sensor.statusColor,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
-          ),
+          )
         ],
-      ),
-    );
-  }
-
-  Widget _buildBottomCardBar() {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: const Color(0xFF8FC04B),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-        boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 6),
-        ],
-      ),
-      child: Center(
-        child: Container(
-          height: 60,
-          width: 60,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(Icons.home, color: Color(0xFF025A40), size: 30),
-        ),
       ),
     );
   }
 }
 
-// Placeholder para a tela de gráficos
-class GraficoScreen extends StatelessWidget {
-  const GraficoScreen({super.key});
+
+// Tela de Detalhes do Sensor
+class DetalheSensorScreen extends StatefulWidget {
+  final SensorData sensor;
+  
+  const DetalheSensorScreen({super.key, required this.sensor});
+
+  @override
+  State<DetalheSensorScreen> createState() => _DetalheSensorScreenState();
+}
+
+class _DetalheSensorScreenState extends State<DetalheSensorScreen> {
+ Future<void> _leitura() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/dados'));
+    print(response.body);
+    
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFEAF5EE),
       appBar: AppBar(
-        title: const Text('Gráfico'),
-        backgroundColor: const Color(0xFF025A40),
+        title: Text(widget.sensor.title),
+        backgroundColor: Colors.brown,
       ),
-      body: const Center(
-        child: Text('Aqui será exibido o gráfico'),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                widget.sensor.imagePath,
+                height: 130,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "Valor: ${widget.sensor.value}",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "Status: ${widget.sensor.status}",
+              style: TextStyle(
+                fontSize: 16,
+                color: widget.sensor.statusColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:appeco/screens/chatbot.dart';
 import 'package:appeco/screens/dados.dart';
 import 'package:flutter/material.dart';
 
@@ -92,7 +93,7 @@ class MainPanelScreen extends StatelessWidget {
                 children: [
                   _buildCard(context, 'Coleta de Dados ', 'images/dados.png', const DadosScreen()),
                   _buildCard(context, 'Sistema de Controle', 'images/controle.png', const Screen2()),
-                  _buildCard(context, 'Assistente Minds', 'images/chatb.png', const Screen3()),
+                  _buildCard(context, 'Assistente Minds', 'images/chatb.png', const ChatScreen()),
                 ],
               ),
             ],
