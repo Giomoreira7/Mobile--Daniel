@@ -92,7 +92,7 @@ class MainPanelScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildCard(context, 'Coleta de Dados ', 'images/dados.png', const DadosScreen()),
-                  _buildCard(context, 'Sistema de Controle', 'images/controle.png', const Screen2()),
+                  _buildCard(context, 'Sistema de Controle', 'images/controle.png', const SistemaControle()),
                   _buildCard(context, 'Assistente Minds', 'images/chatb.png', const ChatScreen()),
                 ],
               ),
