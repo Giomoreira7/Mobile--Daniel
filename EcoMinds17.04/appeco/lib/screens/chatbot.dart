@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _sendMessage() async {
     final userMessage = _controller.text.trim();
-    String url = "https://alanagi-mobileaula15.hf.space/api/v1/run/c7ec8bd3-b7e5-40dd-aa52-7b2575cc7ce8";
+    String url = "https://alanagi-api-agro-algi.hf.space/api/v1/run/20605176-2325-4d92-a1dc-2fc163babba4";
     if (_controller.text.trim().isEmpty) return;
     setState(() {
       _messages.add({
