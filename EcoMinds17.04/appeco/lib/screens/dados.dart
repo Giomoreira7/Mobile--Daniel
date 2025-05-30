@@ -193,7 +193,7 @@ class _DetalheSensorScreenState extends State<DetalheSensorScreen> {
       backgroundColor: const Color(0xFFEAF5EE),
       appBar: AppBar(
         title: Text(widget.sensor.title),
-        backgroundColor: Colors.brown,
+        backgroundColor: const Color(0xFF025A40),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

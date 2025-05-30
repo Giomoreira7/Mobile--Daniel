@@ -66,7 +66,7 @@ class _PlantaCardState extends State<PlantaCard> {
         child: Row(
           children: [
             Image.asset(
-              'images/lumi.png', // verifique se a imagem existe e está no pubspec.yaml
+              'images/painel1.png', // verifique se a imagem existe e está no pubspec.yaml
               width: 50,
               height: 70,
               fit: BoxFit.cover,
