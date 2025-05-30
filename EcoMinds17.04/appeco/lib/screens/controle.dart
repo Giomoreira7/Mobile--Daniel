@@ -73,9 +73,9 @@ class PlantaCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      _buildButton("Liga", Colors.green),
+                      _buildButton("Liga", const Color(0xFF025A40)),
                       const SizedBox(width: 8),
-                      _buildButton("Desliga", Colors.black),
+                      _buildButton("Desliga",  const Color(0xFF8FC04B)),
                     ],
                   ),
                 ],
