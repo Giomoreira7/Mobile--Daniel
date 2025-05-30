@@ -52,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
       body: jsonEncode({
         "input_value":userMessage,
         "output_type":"chat",
-        "input_type":"chat"
+        "input_type":"chat",
       })
       );
 
