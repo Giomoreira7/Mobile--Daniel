@@ -34,27 +34,27 @@ class _DadosScreenState extends State<DadosScreen> {
         value: '80%',
         status: 'Bom',
         statusColor: const Color(0xFF025A40),
-        imagePath: 'images/umidade.png'),
+        imagePath: 'images/solo2.jpg'),
 
     SensorData(
         title: 'Temperatura',
         value: '25 ºC',
         status: 'Bom',
         statusColor:  const Color(0xFF025A40),
-        imagePath: 'images/temp.png'),
+        imagePath: 'images/temp2.jpg'),
     SensorData(
         title: 'Luminosidade',
         value: '80%',
         status: 'Bom',
         statusColor:  const Color(0xFF025A40),
-        imagePath: 'images/lumi.png'),
+        imagePath: 'images/lumi2.jpg'),
 
     SensorData(
         title: 'Niveis de ph',
         value: '2',
         status: 'Ruim',
         statusColor: Colors.red,
-        imagePath: 'images/lumi.png'),
+        imagePath: 'images/ph2.jpg'),
   ];
 
   @override

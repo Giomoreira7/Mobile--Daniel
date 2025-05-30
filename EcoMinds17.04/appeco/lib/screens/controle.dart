@@ -33,7 +33,7 @@ class SistemaControle extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: 4,
+        itemCount: 4,  // número de plantas
         padding: const EdgeInsets.all(16),
         itemBuilder: (context, index) {
           return PlantaCard(plantaIndex: index + 1);
@@ -43,10 +43,17 @@ class SistemaControle extends StatelessWidget {
   }
 }
 
-class PlantaCard extends StatelessWidget {
+class PlantaCard extends StatefulWidget {
   final int plantaIndex;
 
   const PlantaCard({super.key, required this.plantaIndex});
+
+  @override
+  State<PlantaCard> createState() => _PlantaCardState();
+}
+
+class _PlantaCardState extends State<PlantaCard> {
+  bool ligado = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +66,7 @@ class PlantaCard extends StatelessWidget {
         child: Row(
           children: [
             Image.asset(
-              'images/lumi.png',
+              'images/lumi.png', // verifique se a imagem existe e está no pubspec.yaml
               width: 50,
               height: 70,
               fit: BoxFit.cover,
@@ -69,13 +76,13 @@ class PlantaCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Planta $plantaIndex", style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text("Planta ${widget.plantaIndex}", style: const TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      _buildButton("Liga", const Color(0xFF025A40)),
+                      _buildButton("Liga", const Color(0xFF025A40), true),
                       const SizedBox(width: 8),
-                      _buildButton("Desliga",  const Color(0xFF8FC04B)),
+                      _buildButton("Desliga", const Color(0xFF8FC04B), false),
                     ],
                   ),
                 ],
@@ -88,11 +95,11 @@ class PlantaCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    _buildStatusCircle(Colors.green),
+                    _buildStatusCircle(ligado ? Colors.green : Colors.grey),
                     const SizedBox(width: 4),
-                    _buildStatusCircle(Colors.red),
+                    _buildStatusCircle(!ligado ? Colors.red : Colors.grey),
                   ],
-                )
+                ),
               ],
             ),
           ],
@@ -101,14 +108,24 @@ class PlantaCard extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(String text, Color color) {
+  Widget _buildButton(String text, Color color, bool ligar) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        setState(() {
+          ligado = ligar;
+        });
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
         minimumSize: const Size(70, 36),
       ),
-      child: Text(text),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: text == "Liga" ? Colors.white : Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 

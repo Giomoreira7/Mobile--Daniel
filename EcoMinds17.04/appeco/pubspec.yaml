@@ -72,6 +72,10 @@ flutter:
      - images/umidade.png
      - images/lumi.png
      - images/temp.png
+     - images/solo2.jpg
+     - images/temp2.jpg
+     - images/lumi2.jpg
+     - images/ph2.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
