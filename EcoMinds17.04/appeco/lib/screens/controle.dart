@@ -59,7 +59,7 @@ class PlantaCard extends StatelessWidget {
         child: Row(
           children: [
             Image.asset(
-              'assets/planta.png',
+              'images/lumi.png',
               width: 50,
               height: 70,
               fit: BoxFit.cover,

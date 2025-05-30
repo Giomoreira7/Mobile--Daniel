@@ -1,4 +1,5 @@
 import 'package:appeco/screens/chatbot.dart';
+import 'package:appeco/screens/controle.dart';
 import 'package:appeco/screens/dados.dart';
 import 'package:flutter/material.dart';
 
